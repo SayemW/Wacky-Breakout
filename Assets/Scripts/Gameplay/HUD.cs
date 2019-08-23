@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
@@ -12,6 +13,12 @@ public class HUD : MonoBehaviour
     Text remainingBallsText;
 
     static float ballsNum, score;
+    LastBallLost lastBallLost;
+
+    public float getScore
+    {
+        get { return score; }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +27,11 @@ public class HUD : MonoBehaviour
         ballsNum = ConfigurationUtils.BallsRemaining;
         remainingBallsText.text = ballsNum.ToString();
         EventManager.addAddPointsListener(addScore);
+        EventManager.addBallLostListener(removeBall);
+
+        // Game over events
+        lastBallLost = new LastBallLost();
+        EventManager.addLastBallLostInvoker(this);
     }
 
     // Update is called once per frame
@@ -27,6 +39,10 @@ public class HUD : MonoBehaviour
     {
         remainingBallsText.text = ballsNum.ToString();
         scoreText.text = score.ToString();
+        if (ballsNum <= 0 && Time.timeScale != 0)
+        {
+            lastBallLost.Invoke();
+        }
     }
 
     public void addScore (float scr)
@@ -37,5 +53,10 @@ public class HUD : MonoBehaviour
     public static void removeBall ()
     {
         ballsNum--;
+    }
+
+    public void addLastBallLostListener(UnityAction listener)
+    {
+        lastBallLost.AddListener(listener);
     }
 }

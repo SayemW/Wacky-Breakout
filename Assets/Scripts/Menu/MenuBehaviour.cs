@@ -34,4 +34,5 @@ public class MenuBehaviour : MonoBehaviour
         Time.timeScale = 1;
         Destroy(gameObject);
     }
+
 }

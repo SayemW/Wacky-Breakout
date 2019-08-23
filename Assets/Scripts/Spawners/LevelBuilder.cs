@@ -46,6 +46,9 @@ public class LevelBuilder : MonoBehaviour
             }
             location.y -= (blockSize.y + blockSize.y / 2) ;
         }
+
+        // Last ball lost event
+        EventManager.addLastBallLostListener(lastBallIsLost);
     }
 
     void setBlock(Vector3 location)
@@ -91,5 +94,10 @@ public class LevelBuilder : MonoBehaviour
         {
             MenuManager.goToMenu(MenuList.Pause);
         }
+    }
+
+    void lastBallIsLost()
+    {
+        MenuManager.goToMenu(MenuList.GameOver);
     }
 }

@@ -30,9 +30,12 @@ public class BallSpawner : MonoBehaviour
         //Get ball radius and spawn initial ball
         GameObject tempBall = Instantiate(ballPrefab, new Vector3(0, 0, 0), Quaternion.identity);
         ballRadius = tempBall.GetComponent<CircleCollider2D>().radius;
+
+        EventManager.addBallDieListener(spawnBall);
+        EventManager.addBallLostListener(spawnBall);
     }
 
-    public void spawnBall()
+    void spawnBall()
     {
         // Spawn new ball somewhere in the middle
         location.x = 0;

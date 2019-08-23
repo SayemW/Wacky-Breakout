@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class Ball : MonoBehaviour
     Rigidbody2D ballRigidBody2D;
 
     bool isSpedUp = false;
+
+    BallLostEvent ballLostEvent;
+    BallDieEvent ballDieEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +33,13 @@ public class Ball : MonoBehaviour
         // Effect timer
         effectTimer = gameObject.AddComponent<Timer>();
         EventManager.addSpeedListener(speedEffect);
+
+        // Event
+        ballLostEvent = new BallLostEvent();
+        EventManager.addBallLostInvoker(this);
+
+        ballDieEvent = new BallDieEvent();
+        EventManager.addBallDieInvoker(this);
     }
 
     // Update is called once per frame
@@ -42,7 +53,7 @@ public class Ball : MonoBehaviour
         // When the timer runs out
         if (timer.Finished)
         {
-            Camera.main.GetComponent<BallSpawner>().spawnBall();
+            ballDieEvent.Invoke();
             Destroy(gameObject);
         }
         if(effectTimer.Finished && isSpedUp)
@@ -54,14 +65,9 @@ public class Ball : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        HUD.removeBall();
-
-        if (gameObject != null && !timer.Finished && gameObject.transform.position.y <= ScreenUtils.ScreenBottom)
+        if (Camera.main != null && gameObject != null && !timer.Finished && gameObject.transform.position.y <= ScreenUtils.ScreenBottom)
         {
-            if (Camera.main != null)
-            {
-                Camera.main.GetComponent<BallSpawner>().spawnBall();
-            }
+            ballLostEvent.Invoke();
             Destroy(gameObject);
         }
     }
@@ -109,5 +115,15 @@ public class Ball : MonoBehaviour
                 isSpedUp = true;
             }
         }
+    }
+
+    public void addBallLostListener(UnityAction listener)
+    {
+        ballLostEvent.AddListener(listener);
+    }
+
+    public void addBallDieListener(UnityAction listener)
+    {
+        ballDieEvent.AddListener(listener);
     }
 }

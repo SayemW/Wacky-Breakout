@@ -18,8 +18,13 @@ public static class MenuManager
             case MenuList.Pause:
                 Object.Instantiate(Resources.Load("PauseMenu"));
                 break;
-            default:
+            case MenuList.Game:
                 SceneManager.LoadScene("Gameplay");
+                break;
+            case MenuList.GameOver:
+                Object.Instantiate(Resources.Load("GameOver"));
+                break;
+            default:
                 break;
         }
     }

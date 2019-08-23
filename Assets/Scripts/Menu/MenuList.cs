@@ -7,5 +7,6 @@ public enum MenuList
     Start,
     Help,
     Pause,
-    Game
+    Game,
+    GameOver
 }
