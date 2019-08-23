@@ -11,6 +11,9 @@ public static class EventManager
     static List<PickupBlock> speedEffectInvoker = new List<PickupBlock>();
     static List<UnityAction<float, float>> speedListener = new List<UnityAction<float, float>>();
 
+    static List<Blocks> addPointsInvoker = new List<Blocks>();
+    static List<UnityAction<float>> addPointsListener = new List<UnityAction<float>>();
+
     public static void addFreezeListener(UnityAction<float> listener2)
     {
         freezeListener.Add(listener2);
@@ -45,6 +48,24 @@ public static class EventManager
         foreach (UnityAction<float, float> lsnr in speedListener)
         {
             invoker.AddSpeedEffectListener(lsnr);
+        }
+    }
+
+    public static void addAddPointsListener(UnityAction<float> listener2)
+    {
+        addPointsListener.Add(listener2);
+        foreach (Blocks invoker in addPointsInvoker)
+        {
+            invoker.addAddPointsListener(listener2);
+        }
+    }
+
+    public static void addAddPointsInvoker(Blocks invoker)
+    {
+        addPointsInvoker.Add(invoker);
+        foreach (UnityAction<float> lsnr in addPointsListener)
+        {
+            invoker.addAddPointsListener(lsnr);
         }
     }
 }

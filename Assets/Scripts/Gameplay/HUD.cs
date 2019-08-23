@@ -19,6 +19,7 @@ public class HUD : MonoBehaviour
         scoreText.text = "0";
         ballsNum = ConfigurationUtils.BallsRemaining;
         remainingBallsText.text = ballsNum.ToString();
+        EventManager.addAddPointsListener(addScore);
     }
 
     // Update is called once per frame
@@ -28,7 +29,7 @@ public class HUD : MonoBehaviour
         scoreText.text = score.ToString();
     }
 
-    public static void addScore (float scr)
+    public void addScore (float scr)
     {
         score += scr;
     }
