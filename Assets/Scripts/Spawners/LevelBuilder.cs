@@ -17,6 +17,7 @@ public class LevelBuilder : MonoBehaviour
     GameObject pickupBlockPrefab;
 
     Vector2 blockSize;
+    int[,] template;
 
     System.Array enumValues;
 
@@ -33,22 +34,42 @@ public class LevelBuilder : MonoBehaviour
         blockSize = tempBlock.GetComponent<BoxCollider2D>().size;
         Destroy(tempBlock);
 
+        // Create a template
+        template = new int[5, 8];
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                template[i, j] = Random.Range(0, 3) > 0.2 ? 1 : 0;
+            }
+        }
+
         // Add the blocks
         Vector3 location = new Vector3();
         location.y = (ScreenUtils.ScreenTop * 4 / 5) - (blockSize.y / 2);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
-            location.x = ScreenUtils.ScreenLeft + (blockSize.x);
+            location.x = ScreenUtils.ScreenLeft + (blockSize.x / 2 + 0.15f);
+            int col = 0, add = 1;
             while (location.x + (blockSize.x / 2) <= ScreenUtils.ScreenRight)
             {
-                setBlock(location);
+                if (template[i, col] == 1)
+                    setBlock(location);
                 location.x += blockSize.x + (blockSize.x / 2);
+                if (col == 7)
+                {
+                    add = -1;
+                }
+                col += add;
             }
             location.y -= (blockSize.y + blockSize.y / 2) ;
         }
 
         // Last ball lost event
         EventManager.addLastBallLostListener(lastBallIsLost);
+
+        // Last block broken
+        EventManager.addLastBlockLostListener(lastBlockIsLost);
     }
 
     void setBlock(Vector3 location)
@@ -97,6 +118,11 @@ public class LevelBuilder : MonoBehaviour
     }
 
     void lastBallIsLost()
+    {
+        MenuManager.goToMenu(MenuList.GameOver);
+    }
+
+    void lastBlockIsLost()
     {
         MenuManager.goToMenu(MenuList.GameOver);
     }

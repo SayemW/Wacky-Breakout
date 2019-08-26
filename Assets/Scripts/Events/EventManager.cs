@@ -23,6 +23,9 @@ public static class EventManager
     static HUD lastBallLostInvoker;
     static UnityAction lastBallLostListener;
 
+    static List<Blocks> lastBlockLostInvoker = new List<Blocks>();
+    static UnityAction lastBlockLostListener;
+
     public static void addFreezeListener(UnityAction<float> listener2)
     {
         freezeListener.Add(listener2);
@@ -132,4 +135,21 @@ public static class EventManager
         }
     }
 
+    public static void addLastBlockLostListener(UnityAction listener2)
+    {
+        lastBlockLostListener = listener2;
+        foreach(Blocks invoker in lastBlockLostInvoker)
+        {
+            invoker.addLastBlockLostListener(lastBlockLostListener);
+        }
+    }
+
+    public static void addLastBlockLostInvoker(Blocks invoker)
+    {
+        lastBlockLostInvoker.Add(invoker);
+        if (lastBallLostListener != null)
+        {
+            invoker.addLastBlockLostListener(lastBlockLostListener);
+        }
+    }
 }

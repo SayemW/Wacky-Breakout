@@ -7,11 +7,14 @@ public class Blocks : MonoBehaviour
 {
     protected float blockValue;
     protected AddPointsEvent addPointsEvent;
+    protected LastBlockDestroyed lastBlockDestroyed;
 
     // Start is called before the first frame update
     virtual protected void Start()
     {
         addPointsEvent = new AddPointsEvent();
+        lastBlockDestroyed = new LastBlockDestroyed();
+        EventManager.addLastBlockLostInvoker(this);
         EventManager.addAddPointsInvoker(this);
     }
 
@@ -23,11 +26,20 @@ public class Blocks : MonoBehaviour
 
     virtual protected void OnCollisionEnter2D(Collision2D collision)
     {
+        if (GameObject.FindGameObjectsWithTag("Block").Length == 1)
+        {
+            lastBlockDestroyed.Invoke();
+        }
         Destroy(gameObject);
     }
 
     public void addAddPointsListener(UnityAction<float> listener)
     {
         addPointsEvent.AddListener(listener);
+    }
+
+    public void addLastBlockLostListener(UnityAction listener)
+    {
+        lastBlockDestroyed.AddListener(listener);
     }
 }
