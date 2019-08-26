@@ -5,9 +5,6 @@ using UnityEngine.Events;
 
 public class PickupBlock : Blocks
 {
-    [SerializeField]
-    Sprite[] blockSprites;
-
     // Effect properties
     int blockType;
     float effectDuration;
@@ -18,15 +15,21 @@ public class PickupBlock : Blocks
     // Change the Visuals
     SpriteRenderer spriteRenderer;
 
+    // Set Color
+    Color[] color = new Color[2];
     public int setBlockType
     {
         set
         {
             blockType = value;
 
+            // Set colors
+            color[0] = new Color(0 / 255f, 213 / 255f, 255 / 255f, 1);
+            color[1] = new Color(255 / 255f, 48 / 255f, 48 / 255f, 1);
+
             // Get spriterenderer
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = blockSprites[value];
+            spriteRenderer.color = color[value]; 
 
             // Create freeze effect object
             if (value == 0)

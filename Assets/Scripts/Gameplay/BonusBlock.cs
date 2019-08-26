@@ -8,6 +8,7 @@ public class BonusBlock : Blocks
     protected override void Start()
     {
         blockValue = ConfigurationUtils.BonusBlockPoints;
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(222/255f, 183/255f, 55/255f, 1);
         base.Start();
     }
 

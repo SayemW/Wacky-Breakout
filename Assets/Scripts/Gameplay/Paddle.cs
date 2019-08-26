@@ -116,7 +116,7 @@ public class Paddle : MonoBehaviour
     {
         float diff = coll.gameObject.transform.position.y - transform.position.y;
         float diff2 = coll.gameObject.GetComponent<CircleCollider2D>().radius + (paddleBoxCollider.size.y / 2);
-        return Mathf.Abs(diff - diff2) <= 0.05f;
+        return Mathf.Abs(diff - diff2) <= 0.5f;
     }
 
     // Check if freeze event occures 

@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class StandaradBlock : Blocks
 {
-    [SerializeField]
-    Sprite[] blockSprites;
-
     SpriteRenderer spriteRenderer;
-
+    Color[] color = new Color[3];
     // Start is called before the first frame update
     protected override void Start()
     {
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = blockSprites[Random.Range(0, blockSprites.Length)];
+        color[0] = new Color(201 / 255f, 99 / 255f, 131 / 255f, 1);
+        color[1] = new Color(99/255f, 201/255f, 119/255f, 1);
+        color[2] = new Color(107/255f, 99/255f, 201/255f, 1);
+        spriteRenderer.color = color[Random.Range(0, 3)];
         blockValue = ConfigurationUtils.StandardBlockPoints;
         base.Start();
     }
