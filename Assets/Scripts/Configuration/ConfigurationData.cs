@@ -22,12 +22,12 @@ public class ConfigurationData
     static float standardBlockPoints = 1;
     static float bonusBlockPoints = 2;
     static float pickupBlockPoints = 5;
-    static float standardBlockProb = 0.6f;
-    static float bonusBlockProb = 0.2f;
-    static float pickupBlockProb = 0.2f;
+    static float standardBlockProb = 0.75f;
+    static float bonusBlockProb = 0.1f;
+    static float pickupBlockProb = 0.15f;
     static float ballsRemaining = 10;
-    static float freezeDuration = 3;
-    static float speedupDuration = 3;
+    static float freezeDuration = 2;
+    static float speedupDuration = 2;
     static float speedupFactor = 2;
 
     #endregion

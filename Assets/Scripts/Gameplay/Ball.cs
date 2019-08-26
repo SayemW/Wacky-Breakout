@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     [SerializeField]
     GameObject[] effect;
 
+    Material[] mat;
     // Timer to control when the ball destroys itself
     Timer timer, waitTimer, effectTimer;
     const float WaitDuration = 1;
@@ -25,6 +26,9 @@ public class Ball : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mat = new Material[2];
+        mat[0] = Resources.Load<Material>("BallStandard");
+        mat[1] = Resources.Load<Material>("PaddleMaterialRed");
         // Sprite renderer
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         spriteRenderer.enabled = false;
@@ -53,12 +57,12 @@ public class Ball : MonoBehaviour
         // Set initial color
         if (EffectUtils.isSpeedupInEffect && EffectUtils.timeRemaining > 1)
         {
-            effect[1].GetComponent<Renderer>().material = Resources.Load<Material>("PaddleMaterialRed");
-            spriteRenderer.material = Resources.Load<Material>("PaddleMaterialRed");
+            effect[1].GetComponent<Renderer>().material = mat[1];
+            spriteRenderer.material =mat[1];
         }
         else
         {
-            effect[1].GetComponent<Renderer>().material = Resources.Load<Material>("BallStandard");
+            effect[1].GetComponent<Renderer>().material = mat[0];
         }
         Instantiate(effect[1], transform.position , Quaternion.identity);
     }
@@ -75,13 +79,18 @@ public class Ball : MonoBehaviour
         // When the timer runs out
         if (timer.Finished)
         {
+            if (isSpedUp)
+            {
+                effect[0].GetComponent<Renderer>().material = mat[1];
+            }
             Instantiate(effect[0], transform.position, Quaternion.identity);
+            effect[0].GetComponent<Renderer>().material = mat[0];
             ballDieEvent.Invoke();
             Destroy(gameObject);
         }
         if(effectTimer.Finished && isSpedUp)
         {
-            spriteRenderer.material = Resources.Load<Material>("BallStandard");
+            spriteRenderer.material = mat[0];
             ballRigidBody2D.velocity /= speedFac;
             isSpedUp = false;
         }
@@ -105,7 +114,7 @@ public class Ball : MonoBehaviour
         float angle = -Mathf.PI / 2;
         if (EffectUtils.isSpeedupInEffect)
         {
-            spriteRenderer.material = Resources.Load<Material>("PaddleMaterialRed");
+            spriteRenderer.material = mat[1];
             effectTimer.Duration = EffectUtils.timeRemaining;
             isSpedUp = true;
             effectTimer.Run();
@@ -134,7 +143,7 @@ public class Ball : MonoBehaviour
             }
             else
             {
-                spriteRenderer.material = Resources.Load<Material>("PaddleMaterialRed");
+                spriteRenderer.material = mat[1];
                 ballRigidBody2D.velocity *= speedupFactor;
                 effectTimer.Duration = duration;
                 effectTimer.Run();
