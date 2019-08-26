@@ -374,7 +374,7 @@ MonoBehaviour:
   workflow: 1
   selectiveRenderLayerMask:
     serializedVersion: 2
-    m_Bits: 1792
+    m_Bits: 3840
   bloomThreshold:
     minValue: 1
     maxValue: 10

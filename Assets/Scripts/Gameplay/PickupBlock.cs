@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 public class PickupBlock : Blocks
 {
+    [SerializeField]
+    GameObject[] effect;
+
     // Effect properties
     int blockType;
     float effectDuration;
@@ -88,11 +91,13 @@ public class PickupBlock : Blocks
     {
         if (blockType == 0)
         {
+            Instantiate(effect[0], transform.position, Quaternion.identity);
             freezerEffectActivated.Invoke(effectDuration);
             addPointsEvent.Invoke(blockValue);
         }
         else
         {
+            Instantiate(effect[1], transform.position, Quaternion.identity);
             speedupEffectActivated.Invoke(effectDuration, speedupFactor);
         }
         base.OnCollisionEnter2D(collision);

@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 public class Ball : MonoBehaviour
 {
+    [SerializeField]
+    GameObject[] effect;
+
     // Timer to control when the ball destroys itself
     Timer timer, waitTimer, effectTimer;
     const float WaitDuration = 1;
@@ -24,6 +27,7 @@ public class Ball : MonoBehaviour
     {
         // Sprite renderer
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = false;
 
         // Timer to make the ball wait before dropping
         waitTimer = gameObject.AddComponent<Timer>();
@@ -49,8 +53,14 @@ public class Ball : MonoBehaviour
         // Set initial color
         if (EffectUtils.isSpeedupInEffect && EffectUtils.timeRemaining > 1)
         {
+            effect[1].GetComponent<Renderer>().material = Resources.Load<Material>("PaddleMaterialRed");
             spriteRenderer.material = Resources.Load<Material>("PaddleMaterialRed");
         }
+        else
+        {
+            effect[1].GetComponent<Renderer>().material = Resources.Load<Material>("BallStandard");
+        }
+        Instantiate(effect[1], transform.position , Quaternion.identity);
     }
 
     // Update is called once per frame
@@ -58,12 +68,14 @@ public class Ball : MonoBehaviour
     {
         if (waitTimer.Finished)
         {
+            spriteRenderer.enabled = true;
             giveForce();
             waitTimer.Stop();
         }
         // When the timer runs out
         if (timer.Finished)
         {
+            Instantiate(effect[0], transform.position, Quaternion.identity);
             ballDieEvent.Invoke();
             Destroy(gameObject);
         }

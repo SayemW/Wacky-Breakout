@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BonusBlock : Blocks
 {
+    [SerializeField]
+    GameObject effect;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -20,6 +22,7 @@ public class BonusBlock : Blocks
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         addPointsEvent.Invoke(blockValue);
+        Instantiate(effect, transform.position, Quaternion.identity);
         base.OnCollisionEnter2D(collision);
     }
 }
