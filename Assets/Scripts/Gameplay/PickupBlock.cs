@@ -16,7 +16,7 @@ public class PickupBlock : Blocks
     SpriteRenderer spriteRenderer;
 
     // Set Color
-    Color[] color = new Color[2];
+    Material[] mat = new Material[2];
     public int setBlockType
     {
         set
@@ -24,12 +24,12 @@ public class PickupBlock : Blocks
             blockType = value;
 
             // Set colors
-            color[0] = new Color(0 / 255f, 213 / 255f, 255 / 255f, 1);
-            color[1] = new Color(255 / 255f, 48 / 255f, 48 / 255f, 1);
+            mat[0] = Resources.Load<Material>("PaddleMaterialBlue");
+            mat[1] = Resources.Load<Material>("PaddleMaterialRed");
 
             // Get spriterenderer
             spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-            spriteRenderer.color = color[value]; 
+            spriteRenderer.material = mat[value]; 
 
             // Create freeze effect object
             if (value == 0)

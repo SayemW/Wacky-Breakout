@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6077478016102920772}
   - component: {fileID: -21853144896244234}
   - component: {fileID: 8764470962581673980}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PickupBlock
   m_TagString: Block
   m_Icon: {fileID: 0}
@@ -94,9 +94,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4340e2c6f75d6964383c1e1c8826a5f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockSprites:
-  - {fileID: 21300000, guid: acf245c2ecabf7448a45b87e1c9e86bc, type: 3}
-  - {fileID: 21300000, guid: acf245c2ecabf7448a45b87e1c9e86bc, type: 3}
 --- !u!61 &8764470962581673980
 BoxCollider2D:
   m_ObjectHideFlags: 0

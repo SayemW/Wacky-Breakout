@@ -17,9 +17,14 @@ public class Ball : MonoBehaviour
     BallLostEvent ballLostEvent;
     BallDieEvent ballDieEvent;
 
+    SpriteRenderer spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Sprite renderer
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
         // Timer to make the ball wait before dropping
         waitTimer = gameObject.AddComponent<Timer>();
         waitTimer.Duration = WaitDuration;
@@ -40,6 +45,12 @@ public class Ball : MonoBehaviour
 
         ballDieEvent = new BallDieEvent();
         EventManager.addBallDieInvoker(this);
+
+        // Set initial color
+        if (EffectUtils.isSpeedupInEffect && EffectUtils.timeRemaining > 1)
+        {
+            spriteRenderer.material = Resources.Load<Material>("PaddleMaterialRed");
+        }
     }
 
     // Update is called once per frame
@@ -58,6 +69,7 @@ public class Ball : MonoBehaviour
         }
         if(effectTimer.Finished && isSpedUp)
         {
+            spriteRenderer.material = Resources.Load<Material>("BallStandard");
             ballRigidBody2D.velocity /= speedFac;
             isSpedUp = false;
         }
@@ -81,6 +93,7 @@ public class Ball : MonoBehaviour
         float angle = -Mathf.PI / 2;
         if (EffectUtils.isSpeedupInEffect)
         {
+            spriteRenderer.material = Resources.Load<Material>("PaddleMaterialRed");
             effectTimer.Duration = EffectUtils.timeRemaining;
             isSpedUp = true;
             effectTimer.Run();
@@ -109,6 +122,7 @@ public class Ball : MonoBehaviour
             }
             else
             {
+                spriteRenderer.material = Resources.Load<Material>("PaddleMaterialRed");
                 ballRigidBody2D.velocity *= speedupFactor;
                 effectTimer.Duration = duration;
                 effectTimer.Run();

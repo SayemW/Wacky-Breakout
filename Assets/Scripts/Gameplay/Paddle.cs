@@ -24,16 +24,24 @@ public class Paddle : MonoBehaviour
     const float BounceAngleHalfRange = Mathf.PI / 3;
 
     // Check if paddle is frozen
-    bool isFrozen;
-
+    bool isFrozen = false;
+    bool isSpedUp = false;
+    
     // Effect Timer
     Timer freezeEffectTimer;
+    Timer speedEffectTimer;
+
+    // Sprite Color
+    SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         paddleRigidBody2D = GetComponent<Rigidbody2D>();
         moveUnitsPerSecond = ConfigurationUtils.PaddleMoveUnitsPerSecond;
+
+        // Get sprite renderer
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
         // get paddle width
         paddleBoxCollider = GetComponent<BoxCollider2D>();
@@ -48,15 +56,26 @@ public class Paddle : MonoBehaviour
 
         // Initialize timer and add event listener
         freezeEffectTimer = gameObject.AddComponent<Timer>();
+        speedEffectTimer = gameObject.AddComponent<Timer>();
+
         EventManager.addFreezeListener(setFreeze);
+        EventManager.addSpeedListener(setSpeedColor);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (freezeEffectTimer.Finished)
+        if (freezeEffectTimer.Finished && isFrozen)
         {
             isFrozen = false;
+            if (!isSpedUp)
+                spriteRenderer.material = Resources.Load<Material>("PaddleMaterialOrange");
+        }
+        if (speedEffectTimer.Finished && isSpedUp)
+        {
+            isSpedUp = false;
+            if (!isFrozen)
+                spriteRenderer.material = Resources.Load<Material>("PaddleMaterialOrange");
         }
     }
 
@@ -128,9 +147,25 @@ public class Paddle : MonoBehaviour
         }
         else
         {
+            spriteRenderer.material = Resources.Load<Material>("PaddleMaterialBlue");
             freezeEffectTimer.Duration = duration;
             freezeEffectTimer.Run();
             isFrozen = true;
+        }
+    }
+
+    void setSpeedColor(float duration, float multiplier)
+    {
+        if (isSpedUp)
+        {
+            speedEffectTimer.addTime(duration);
+        }
+        else
+        {
+            speedEffectTimer.Duration = duration;
+            speedEffectTimer.Run();
+            isSpedUp = true;
+            spriteRenderer.material = Resources.Load<Material>("PaddleMaterialRed");
         }
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6762775789095499162}
   - component: {fileID: 9145836170160027850}
   - component: {fileID: 8426714447766101007}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BonusBlock
   m_TagString: Block
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: b666c3c4584fca545a70a19dc177dc18, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
