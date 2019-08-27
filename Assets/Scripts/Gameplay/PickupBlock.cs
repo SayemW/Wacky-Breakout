@@ -94,11 +94,13 @@ public class PickupBlock : Blocks
             Instantiate(effect[0], transform.position, Quaternion.identity);
             freezerEffectActivated.Invoke(effectDuration);
             addPointsEvent.Invoke(blockValue);
+            AudioManager.Play(AudioClipName.Freeze);
         }
         else
         {
             Instantiate(effect[1], transform.position, Quaternion.identity);
             speedupEffectActivated.Invoke(effectDuration, speedupFactor);
+            AudioManager.Play(AudioClipName.SpeedUp);
         }
         base.OnCollisionEnter2D(collision);
     }

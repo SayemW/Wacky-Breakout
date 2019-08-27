@@ -116,6 +116,7 @@ public class Paddle : MonoBehaviour
     {
         if (coll.gameObject.CompareTag("Ball") && isValid(coll))
         {
+            AudioManager.Play(AudioClipName.PadHit);
             // calculate new ball direction
             float ballOffsetFromPaddleCenter = transform.position.x -
                 coll.transform.position.x;

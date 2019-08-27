@@ -26,6 +26,7 @@ public class Blocks : MonoBehaviour
 
     virtual protected void OnCollisionEnter2D(Collision2D collision)
     {
+        AudioManager.Play(AudioClipName.BlockHit);
         if (GameObject.FindGameObjectsWithTag("Block").Length == 1)
         {
             lastBlockDestroyed.Invoke();

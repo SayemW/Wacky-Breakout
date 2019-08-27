@@ -57,6 +57,7 @@ public class Ball : MonoBehaviour
         // Set initial color
         if (EffectUtils.isSpeedupInEffect && EffectUtils.timeRemaining > 1)
         {
+            isSpedUp = true;
             effect[1].GetComponent<Renderer>().material = mat[1];
             spriteRenderer.material =mat[1];
         }
