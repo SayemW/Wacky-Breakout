@@ -55,7 +55,6 @@ public class Ball : MonoBehaviour
         EventManager.addBallDieInvoker(this);
 
         // Set initial color
-        print(EffectUtils.isSpeedupInEffect);
         if (EffectUtils.isSpeedupInEffect && EffectUtils.timeRemaining > 1)
         {
             isSpedUp = true;

@@ -21,6 +21,8 @@ public class LevelBuilder : MonoBehaviour
 
     System.Array enumValues;
 
+    bool gameOverCalled;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +65,7 @@ public class LevelBuilder : MonoBehaviour
                 col += add;
             }
             location.y -= (blockSize.y + blockSize.y / 2) ;
+            gameOverCalled = false;
         }
 
         // Last ball lost event
@@ -119,11 +122,19 @@ public class LevelBuilder : MonoBehaviour
 
     void lastBallIsLost()
     {
-        MenuManager.goToMenu(MenuList.GameOver);
+        if (!gameOverCalled)
+        {
+            MenuManager.goToMenu(MenuList.GameOver);
+            gameOverCalled = true;
+        }
     }
 
     void lastBlockIsLost()
     {
-        MenuManager.goToMenu(MenuList.GameOver);
+        if (!gameOverCalled)
+        {
+            MenuManager.goToMenu(MenuList.GameOver);
+            gameOverCalled = true;
+        }
     }
 }
