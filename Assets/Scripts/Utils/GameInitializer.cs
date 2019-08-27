@@ -12,6 +12,12 @@ public class GameInitializer : MonoBehaviour
     /// </summary>
 	void Awake()
     {
+        // EffectUtils
+        EffectUtils.speedUpEffectMonitor = Camera.main.GetComponent<SpeedUpEffectMonitor>();
+
+        // Clear Event Manager
+        EventManager.clearAll();
+
         // initialize screen utils
         ScreenUtils.Initialize();
 

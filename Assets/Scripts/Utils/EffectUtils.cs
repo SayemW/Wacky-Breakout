@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class EffectUtils
 {
-    public static SpeedUpEffectMonitor speedUpEffectMonitor = Camera.main.GetComponent<SpeedUpEffectMonitor>();
+    public static SpeedUpEffectMonitor speedUpEffectMonitor;
 
     public static bool isSpeedupInEffect
     {

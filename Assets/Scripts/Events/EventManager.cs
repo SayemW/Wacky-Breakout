@@ -18,7 +18,7 @@ public static class EventManager
     static List<UnityAction> ballLostListener = new List<UnityAction>();
 
     static List<Ball> ballDieInvoker = new List<Ball>();
-    static List<UnityAction> ballDieListener = new List<UnityAction>();
+    static UnityAction ballDieListener;
 
     static HUD lastBallLostInvoker;
     static UnityAction lastBallLostListener;
@@ -101,7 +101,7 @@ public static class EventManager
 
     public static void addBallDieListener(UnityAction listener)
     {
-        ballDieListener.Add(listener);
+        ballDieListener = listener;
         foreach (Ball invoker in ballDieInvoker)
         {
             invoker.addBallDieListener(listener);
@@ -111,9 +111,9 @@ public static class EventManager
     public static void addBallDieInvoker(Ball invoker)
     {
         ballDieInvoker.Add(invoker);
-        foreach (UnityAction lsnr in ballDieListener)
+        if (ballDieListener != null)
         {
-            invoker.addBallDieListener(lsnr);
+            invoker.addBallDieListener(ballDieListener);
         }
     }
 
@@ -151,5 +151,19 @@ public static class EventManager
         {
             invoker.addLastBlockLostListener(lastBlockLostListener);
         }
+    }
+
+    public static void clearAll()
+    {
+        freezeEffectInvoker.Clear();
+        freezeListener.Clear();
+        speedEffectInvoker.Clear();
+        speedListener.Clear();
+        addPointsInvoker.Clear();
+        addPointsListener.Clear();
+        ballLostInvoker.Clear();
+        ballLostListener.Clear();
+        ballDieInvoker.Clear();
+        lastBlockLostInvoker.Clear();
     }
 }
