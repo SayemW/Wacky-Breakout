@@ -25,7 +25,7 @@ public class ConfigurationData
     static float standardBlockProb = 0.75f;
     static float bonusBlockProb = 0.1f;
     static float pickupBlockProb = 0.15f;
-    static float ballsRemaining = 10;
+    static float ballsRemaining = 20;
     static float freezeDuration = 2;
     static float speedupDuration = 2;
     static float speedupFactor = 2;

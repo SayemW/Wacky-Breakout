@@ -12,7 +12,6 @@ public class DisplayScore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0;
         score = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUD>().getScore;
         scoreText.text = score.ToString();
     }
@@ -20,7 +19,10 @@ public class DisplayScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Time.timeScale > 0)
+        {
+            Time.timeScale = Mathf.Clamp(Time.timeScale - 0.5f * Time.unscaledDeltaTime, 0, 1);
+        }
     }
 
 }

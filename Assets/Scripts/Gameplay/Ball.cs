@@ -16,7 +16,7 @@ public class Ball : MonoBehaviour
 
     Rigidbody2D ballRigidBody2D;
 
-    bool isSpedUp = false;
+    bool isSpedUp;
 
     BallLostEvent ballLostEvent;
     BallDieEvent ballDieEvent;
